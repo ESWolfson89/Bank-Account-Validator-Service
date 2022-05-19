@@ -65,56 +65,55 @@ public class BankAccountValidatorService {
 	return "{ \"Initialization\": \"failed\" }";
     }
 	
-	// Aggregation request mapping
-	@GetMapping("/validator")
-	public String validator(@RequestBody String body) {
-		JsonObject response = new JsonObject();
-		JsonArray responseArray = new JsonArray();
-		if (initialized) {
-			JsonObject request = JsonParser.parseString(body).getAsJsonObject();
-			// Error checking: make sure request json contains accountNumber, else return empty result
-			if (request.has("accountNumber")) {
-				JsonArray sourcesJson = new JsonArray();
-				// Get optional sources field in request json and set json array value
-				// Else if sources not in request json, add all source names in configuration file to source list
-				if (request.has("sources")) {
-				    sourcesJson = request.get("sources").getAsJsonArray();
-				}
-				else {
-					for (String name: sourceNames) {
-						sourcesJson.add(name);
-					}
-				}
-				// poll all sources in request json
-				for (JsonElement sourceElement : sourcesJson) {
-					String sourceResponse = new String();
-					String sourceString = sourceElement.toString();
-					String trimmedSourceString = sourceString.substring(1, sourceString.length() - 1);
-					if (sourceNames.contains(trimmedSourceString)) {
-						String sourceRequestBody = "{ \"accountNumber\": " + request.get("accountNumber").toString() + " }";
-					    HttpEntity<String> entity = new HttpEntity<String>(sourceRequestBody);
-						Integer sourceListPosition = sourceNames.indexOf(trimmedSourceString);
-						// Post request must be made since get requests using this function does not take request body
-						// Return response with valid field with input request of account number
-						ResponseEntity<String> responseEntity = restTemplate.exchange(sourceUrls.get(sourceListPosition), HttpMethod.POST, entity, String.class);
-					    sourceResponse = responseEntity.getBody();
-						JsonObject sourceResponseObject = JsonParser.parseString(sourceResponse).getAsJsonObject();
-						sourceResponseObject.add("source", sourceElement);
-						// add valid/source field combination to array
-						responseArray.add(sourceResponseObject);
-					}
-				}
-			}
+    // Aggregation request mapping
+    @GetMapping("/validator")
+    public String validator(@RequestBody String body) {
+	JsonObject response = new JsonObject();
+	JsonArray responseArray = new JsonArray();
+	if (initialized) {
+	    JsonObject request = JsonParser.parseString(body).getAsJsonObject();
+	    // Error checking: make sure request json contains accountNumber, else return empty result
+	    if (request.has("accountNumber")) {
+		JsonArray sourcesJson = new JsonArray();
+		// Get optional sources field in request json and set json array value
+		// Else if sources not in request json, add all source names in configuration file to source list
+		if (request.has("sources")) {
+		    sourcesJson = request.get("sources").getAsJsonArray();
 		}
-		response.add("result", responseArray);
-		return response.toString();
+		else {
+		    for (String name: sourceNames) {
+			 sourcesJson.add(name);
+		    }
+		}
+		// poll all sources in request json
+		for (JsonElement sourceElement : sourcesJson) {
+		     String sourceResponse = new String();
+		     String sourceString = sourceElement.toString();
+		     String trimmedSourceString = sourceString.substring(1, sourceString.length() - 1);
+		     if (sourceNames.contains(trimmedSourceString)) {
+			 String sourceRequestBody = "{ \"accountNumber\": " + request.get("accountNumber").toString() + " }";
+			 HttpEntity<String> entity = new HttpEntity<String>(sourceRequestBody);
+			 Integer sourceListPosition = sourceNames.indexOf(trimmedSourceString);
+			 // Post request must be made since get requests using this function does not take request body
+			 // Return response with valid field with input request of account number
+			 ResponseEntity<String> responseEntity = restTemplate.exchange(sourceUrls.get(sourceListPosition), HttpMethod.POST, entity, String.class);
+			 sourceResponse = responseEntity.getBody();
+			 JsonObject sourceResponseObject = JsonParser.parseString(sourceResponse).getAsJsonObject();
+			 sourceResponseObject.add("source", sourceElement);
+			 // add valid/source field combination to array
+			 responseArray.add(sourceResponseObject);
+		     }
+		}
+	    }
 	}
+	response.add("result", responseArray);
+	return response.toString();
+    }
 	
-	// Data source response mapping
+    // Data source response mapping
     @RequestMapping("/{source}")
     public String source1(@PathVariable String source, @RequestBody String body) {
     	// check if account is in list of valid accounts
         return sources.get(source).get(body);
     }
-	
 }
