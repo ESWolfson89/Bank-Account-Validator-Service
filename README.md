@@ -42,6 +42,7 @@ For example if sources are defined as "sources.names=source1,source2":
 ---------
 
 The following tests were done using the curl command in Windows:
+
 1) For application.properties file:
 
 spring.application.name=BankAccountValidatorService
@@ -51,8 +52,10 @@ sources.names=source1,source2,source3
 sources.urls=http\://localhost:8080/source1,http\://localhost:8080/source2,http\://localhost:8080/source3
 
 
+
 Terminal output:
 ![Alt text](/BankAccountValidatorService/tests1.png?raw=true "Screenshot")
+
 
 2) For application.properties file:
 
@@ -61,6 +64,7 @@ spring.application.name=BankAccountValidatorService
 sources.names=source1,source2,source3,source4
 
 sources.urls=http\://localhost:8080/source1,http\://localhost:8080/source2,http\://localhost:8080/source3,http\://localhost:8080/source4
+
 
 
 Terminal output:
