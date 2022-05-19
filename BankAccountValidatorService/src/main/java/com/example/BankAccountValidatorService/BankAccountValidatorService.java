@@ -25,7 +25,7 @@ import com.google.gson.JsonParser;
 @SpringBootApplication
 @RestController
 public class BankAccountValidatorService {
-	private static HashMap<String, MockSource> sources = new HashMap<String, MockSource>();
+    private static HashMap<String, MockSource> sources = new HashMap<String, MockSource>();
 
     private final RestTemplate restTemplate = new RestTemplate();
     
@@ -37,33 +37,33 @@ public class BankAccountValidatorService {
     @Value("#{'${sources.urls}'.split(',')}")
     private List<String> sourceUrls;
 	
-	public static void main(String[] args) {
-		 SpringApplication.run(BankAccountValidatorService.class, args);
-	}
+    public static void main(String[] args) {
+	SpringApplication.run(BankAccountValidatorService.class, args);
+    }
 	
-	// setup source and account data
-	public void setup() {
-		Integer accountNumber = 12345678;
-		for (String name : sourceNames) {
-			sources.put(name, new MockSource());
-			// add 5 accounts to each source
-			for (int i = 0; i < 5; i++) {
-			    sources.get(name).addAccount(accountNumber.toString());
-			    accountNumber++;
-			}
-		}
-	}
+    // setup source and account data
+    public void setup() {
+	Integer accountNumber = 12345678;
+	for (String name : sourceNames) {
+            sources.put(name, new MockSource());
+	    // add 5 accounts to each source
+	    for (int i = 0; i < 5; i++) {
+		 sources.get(name).addAccount(accountNumber.toString());
+		 accountNumber++;
+	    }
+        }
+    }
 	
-	// setup source and account data mapping
-	@PostMapping("/initialize")
-	public String initializer() {
-		if (sources.size() == 0) {
-			setup();
-			initialized = true;
-			return "{ \"Initialization\": \"success\" }";
-		}
-		return "{ \"Initialization\": \"failed\" }";
+    // setup source and account data mapping
+    @PostMapping("/initialize")
+    public String initializer() {
+	if (sources.size() == 0) {
+	    setup();
+	    initialized = true;
+	    return "{ \"Initialization\": \"success\" }";
 	}
+	return "{ \"Initialization\": \"failed\" }";
+    }
 	
 	// Aggregation request mapping
 	@GetMapping("/validator")
