@@ -1,6 +1,8 @@
 # Bank-Account-Validator-Service
 Spring boot rest services that polls sources and validates a bank account number
 
+This app was written on Windows
+
 ---------
 
 There are 2 Java files in:
