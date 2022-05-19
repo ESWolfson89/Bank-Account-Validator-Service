@@ -26,4 +26,4 @@ sources.urls=http\://localhost:8080/source1,http\://localhost:8080/source2,http\
 2) For application.properties file
 spring.application.name=BankAccountValidatorService
 sources.names=source1,source2,source3,source4
-sources.urls=http\://localhost:8080/source1,http\://localhost:8080/source2,http\://localhost:8080/source3,http://localhost:8080/source4
+sources.urls=http\://localhost:8080/source1,http\://localhost:8080/source2,http\://localhost:8080/source3,http\://localhost:8080/source4
