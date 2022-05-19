@@ -1,6 +1,8 @@
 # Bank-Account-Validator-Service
 Spring boot rest services that polls sources and validates a bank account number
 
+---------
+
 There are 2 Java files in:
 BankAccountValidatorService/src/main/java/com/example/BankAccountValidatorService/
 1) BankAccountValidatorService.java
@@ -9,15 +11,19 @@ BankAccountValidatorService/src/main/java/com/example/BankAccountValidatorServic
 The application.properties file is in:
 BankAccountValidatorService/src/main/resources
 
+---------
+
 External Requirements:
 1) Eclipse
 2) LibericaJDK-11 JRE
 3) Curl
 
+---------
+
 To run go into the project directory and type:
 mvnw spring-boot:run
 
-
+---------
 
 The account numbers for a source that are defined as valid goes by the range
 
@@ -31,7 +37,7 @@ For example if sources are defined as "sources.names=source1,source2":
 
 [12345683-12345687] are valid for source2
 
-
+---------
 
 The following tests were done using the curl command in Windows:
 1) For application.properties file
