@@ -25,6 +25,8 @@ External Requirements:
 To run go into the project directory and type:
 mvnw spring-boot:run
 
+![Alt text](/BankAccountValidatorService/springbootrunning.png?raw=true "Screenshot")
+
 ---------
 
 The account numbers for a source that are defined as valid goes by the range
