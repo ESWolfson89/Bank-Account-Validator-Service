@@ -17,6 +17,15 @@ External Requirements:
 To run go into the project directory and type:
 mvnw spring-boot:run
 
+The account numbers for a source that are defined as valid goes by the range
+[12345678-12345682] + (sourceNum-1)*5
+
+where sourceNum is the position of the source as listed in application.properties
+
+For example if sources are defined as "sources.names=source1,source2":
+[12345678-12345682] are valid for source1
+[12345683-12345687] are valid for source2
+
 The following tests were done using the curl command in Windows:
 1) For application.properties file
 spring.application.name=BankAccountValidatorService
